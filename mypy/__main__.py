@@ -30,7 +30,8 @@ def console_entry() -> None:
         sys.stdout.write(formatter.style(msg, color="red", bold=True))
         sys.stdout.flush()
         sys.stderr.flush()
-        sys.exit(2)
+        raise KeyboardInterrupt
+        # sys.exit(2)
 
 
 if __name__ == "__main__":

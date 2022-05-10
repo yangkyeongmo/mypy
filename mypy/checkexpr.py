@@ -301,6 +301,13 @@ class ExpressionChecker(ExpressionVisitor[Type]):
         self.in_expression = False
         self.type_context = [None]
 
+        self.fullnames = set(
+            line.rstrip('\n')
+            for line in open('fullnames.txt', 'r').readlines()
+        )
+        self.members = set(open('members.txt', 'r').readlines())
+        self.raw_f = open('raw.txt', 'a')
+
         # Temporary overrides for expression types. This is currently
         # used by the union math in overloads.
         # TODO: refactor this to use a pattern similar to one in
@@ -564,6 +571,25 @@ class ExpressionChecker(ExpressionVisitor[Type]):
         ret_type = self.check_call_expr_with_callee_type(
             callee_type, e, fullname, object_type, member
         )
+        if fullname is None and object_type is not None:
+            _name = None
+            if hasattr(object_type, 'type'):
+                _name = object_type.type.fullname
+            if _name is not None:
+                fullname = _name + '.' + member
+
+        parent_f = self.chk.tscope.function
+        if (
+            parent_f is not None
+            and str(fullname) in self.fullnames
+            and 'test' not in parent_f.fullname
+        ):
+            with open('fullnames.txt', 'a') as f:
+                f.write(parent_f.fullname)
+                f.write('\n')
+            with open('fullnames_debug.txt', 'a') as f:
+                f.write(f'{fullname} is called from {parent_f.fullname}')
+                f.write('\n')
         if isinstance(e.callee, RefExpr) and len(e.args) == 2:
             if e.callee.fullname in ("builtins.isinstance", "builtins.issubclass"):
                 self.check_runtime_protocol_test(e)
