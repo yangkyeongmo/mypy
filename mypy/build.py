@@ -3228,6 +3228,10 @@ def process_stale_scc(graph: Graph, scc: List[str], manager: BuildManager) -> No
         graph[id].write_cache()
         graph[id].mark_as_rechecked()
 
+    fullnames = sorted(list(set(open('fullnames.txt', 'r').readlines())))
+    with open('fullnames.txt', 'w') as f:
+        f.writelines(fullnames)
+
 
 def sorted_components(graph: Graph,
                       vertices: Optional[AbstractSet[str]] = None,
