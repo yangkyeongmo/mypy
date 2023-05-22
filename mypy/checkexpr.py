@@ -1,4 +1,5 @@
 """Expression type checker. This file is conceptually part of TypeChecker."""
+from pathlib import Path
 
 from __future__ import annotations
 
@@ -213,6 +214,9 @@ OVERLAPPING_BYTES_ALLOWLIST: Final = {
 }
 
 
+MYPYIND_PATH = Path(__file__).parent.parent / "mypyind"
+
+
 class TooManyUnions(Exception):
     """Indicates that we need to stop splitting unions in an attempt
     to match an overload in order to save performance.
@@ -303,10 +307,10 @@ class ExpressionChecker(ExpressionVisitor[Type]):
 
         self.fullnames = set(
             line.rstrip('\n')
-            for line in open('fullnames.txt', 'r').readlines()
+            for line in open(MYPYIND_PATH / "fullnames.txt", 'r').readlines()
         )
-        self.members = set(open('members.txt', 'r').readlines())
-        self.raw_f = open('raw.txt', 'a')
+        self.members = set(open(MYPYIND_PATH / "members.txt", 'r').readlines())
+        self.raw_f = open(MYPYIND_PATH / 'raw.txt', 'a')
 
         # Temporary overrides for expression types. This is currently
         # used by the union math in overloads.
@@ -584,10 +588,10 @@ class ExpressionChecker(ExpressionVisitor[Type]):
             and str(fullname) in self.fullnames
             and 'test' not in parent_f.fullname
         ):
-            with open('fullnames.txt', 'a') as f:
+            with open(MYPYIND_PATH / 'fullnames.txt', 'a') as f:
                 f.write(parent_f.fullname)
                 f.write('\n')
-            with open('fullnames_debug.txt', 'a') as f:
+            with open(MYPYIND_PATH / 'fullnames_debug.txt', 'a') as f:
                 f.write(f'{fullname} is called from {parent_f.fullname}')
                 f.write('\n')
         if isinstance(e.callee, RefExpr) and len(e.args) == 2:
