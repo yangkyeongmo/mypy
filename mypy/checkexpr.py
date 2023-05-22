@@ -165,6 +165,7 @@ from mypy.typevars import fill_typevars
 from mypy.typevartuples import find_unpack_in_list
 from mypy.util import split_module_names
 from mypy.visitor import ExpressionVisitor
+from mypyind.utils import store_target_fullname
 
 # Type of callback user for checking individual function arguments. See
 # check_args() below for details.
@@ -545,6 +546,15 @@ class ExpressionChecker(ExpressionVisitor[Type]):
             ):
                 member = e.callee.name
                 object_type = self.chk.lookup_type(e.callee.expr)
+
+        # TODO: This is not finding function call. Only calls inside class is found.
+        store_target_fullname(
+            fullname=fullname,
+            object_type=object_type,
+            member=member,
+            parent_fullname=self.chk.tscope.function.fullname if self.chk.tscope.function else None,
+        )
+
         ret_type = self.check_call_expr_with_callee_type(
             callee_type, e, fullname, object_type, member
         )
@@ -1285,6 +1295,12 @@ class ExpressionChecker(ExpressionVisitor[Type]):
             object_type: If callable_name refers to a method, the type of the object
                 on which the method is being called
         """
+        store_target_fullname(
+            fullname=callable_name,
+            object_type=None,
+            member=None,
+            parent_fullname=self.chk.tscope.function.fullname if self.chk.tscope.function else None,
+        )
         callee = get_proper_type(callee)
 
         if isinstance(callee, CallableType):
