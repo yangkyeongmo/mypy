@@ -21,6 +21,7 @@ import stat
 import sys
 import time
 import types
+from pathlib import Path
 
 from typing import (AbstractSet, Any, Dict, Iterable, Iterator, List, Sequence,
                     Mapping, NamedTuple, Optional, Set, Tuple, TypeVar, Union, Callable, TextIO)
@@ -84,6 +85,9 @@ CORE_BUILTIN_MODULES: Final = {
 
 
 Graph: _TypeAlias = Dict[str, 'State']
+
+
+MYPYIND_PATH = Path(__file__).parent.parent / 'mypyind'
 
 
 # TODO: Get rid of BuildResult.  We might as well return a BuildManager.
@@ -3228,8 +3232,8 @@ def process_stale_scc(graph: Graph, scc: List[str], manager: BuildManager) -> No
         graph[id].write_cache()
         graph[id].mark_as_rechecked()
 
-    fullnames = sorted(list(set(open('fullnames.txt', 'r').readlines())))
-    with open('fullnames.txt', 'w') as f:
+    fullnames = sorted(list(set(open(MYPYIND_PATH / 'fullnames.txt', 'r').readlines())))
+    with open(MYPYIND_PATH / 'fullnames.txt', 'w') as f:
         f.writelines(fullnames)
 
 

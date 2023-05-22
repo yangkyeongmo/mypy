@@ -99,3 +99,12 @@ mypy.dmypy_server.Server.check is called from mypy.dmypy_server.Server.cmd_check
 mypy.dmypy_server.Server.initialize_fine_grained is called from mypy.dmypy_server.Server.check
 mypy.build.build is called from mypy.dmypy_server.Server.initialize_fine_grained
 mypy.main.main is called from mypy.api.run
+level=0
+level=0
+level=0
+level=0
+level=0
+level=0
+level=0
+level=0
+level=0
