@@ -60,3 +60,7 @@ test_capi
 /.mypyc-flake8-cache.json
 /mypyc/lib-rt/build/
 /mypyc/lib-rt/*.so
+
+# mypyind
+mypyind/fullnames.txt
+mypyind/fullnames_debug.txt.txt
