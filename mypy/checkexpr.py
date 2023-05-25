@@ -1,5 +1,4 @@
 """Expression type checker. This file is conceptually part of TypeChecker."""
-from pathlib import Path
 
 from mypy.backports import OrderedDict
 from contextlib import contextmanager
@@ -74,6 +73,7 @@ from mypy.typeops import (
 )
 from mypy.message_registry import ErrorMessage
 import mypy.errorcodes as codes
+from mypyind.utils import store_fullname_if_found
 
 # Type of callback user for checking individual function arguments. See
 # check_args() below for details.
@@ -111,9 +111,6 @@ OVERLAPPING_TYPES_ALLOWLIST: Final = [
     "_collections_abc.dict_keys",
     "_collections_abc.dict_items",
 ]
-
-
-MYPYIND_PATH = Path(__file__).parent.parent / "mypyind"
 
 
 class TooManyUnions(Exception):
@@ -193,13 +190,6 @@ class ExpressionChecker(ExpressionVisitor[Type]):
         self.msg = msg
         self.plugin = plugin
         self.type_context = [None]
-
-        self.fullnames = set(
-            line.rstrip('\n')
-            for line in open(MYPYIND_PATH / "fullnames.txt", 'r').readlines()
-        )
-        self.members = set(open(MYPYIND_PATH / "members.txt", 'r').readlines())
-        self.raw_f = open(MYPYIND_PATH / 'raw.txt', 'a')
 
         # Temporary overrides for expression types. This is currently
         # used by the union math in overloads.
@@ -384,25 +374,7 @@ class ExpressionChecker(ExpressionVisitor[Type]):
                 member = e.callee.name
                 object_type = self.chk.type_map[e.callee.expr]
 
-        if fullname is None and object_type is not None:
-            _name = None
-            if hasattr(object_type, 'type'):
-                _name = object_type.type.fullname
-            if _name is not None:
-                fullname = _name + '.' + member
-
-        parent_f = self.chk.tscope.function
-        if (
-            parent_f is not None
-            and str(fullname) in self.fullnames
-            and 'test' not in parent_f.fullname
-        ):
-            with open(MYPYIND_PATH / 'fullnames.txt', 'a') as f:
-                f.write(parent_f.fullname)
-                f.write('\n')
-            with open(MYPYIND_PATH / 'fullnames_debug.txt', 'a') as f:
-                f.write(f'{fullname} is called from {parent_f.fullname}')
-                f.write('\n')
+        store_fullname_if_found(fullname, member, object_type, self.chk.tscope.function)
 
         ret_type = self.check_call_expr_with_callee_type(callee_type, e, fullname,
                                                          object_type, member)
