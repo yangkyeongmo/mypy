@@ -2,28 +2,15 @@ import os
 import sys
 from pathlib import Path
 
-DIR = Path(__file__).parent
-FULLNAMES_PATH = Path(DIR, 'fullnames.txt')
-FULLNAMES_DEBUG_PATH = Path(DIR, 'fullnames_debug.txt')
-INI_PATH = Path(DIR, 'mypyind.ini')
-
-MYPY_DIR = Path(DIR.parent, 'mypy')
-MAIN_PATH = Path(MYPY_DIR, '__main__.py')
-
-REQUIRED_OPTIONS = [
-    '--cache-dir=/dev/null',  # disable caching
-    '--namespace-packages',
-    f'--config-file={INI_PATH}',  # use custom config file
-]
+from mypy.build import MYPYIND_PATH
+from mypyind.constants import FULLNAMES_PATH, MYPYIND_REQUIRED_OPTIONS, MAIN_PATH, FULLNAMES_DEBUG_PATH
 
 
 def main(target: str):
     path = Path(target)
-    if not path.is_dir():
-        raise Exception(f"Given file path is not dir path. Given: {path}")
 
     fullnames = set(open(FULLNAMES_PATH, 'r').readlines())
-    options = ' '.join(REQUIRED_OPTIONS)
+    options = ' '.join(MYPYIND_REQUIRED_OPTIONS)
     cmd = f'python {MAIN_PATH} {path} {options}'
 
     _iterate(cmd, fullnames)
@@ -42,6 +29,14 @@ def _iterate(cmd, fullnames):
         os.system(cmd)
         fullnames = new_fullnames
         new_fullnames = set(open(FULLNAMES_PATH, 'r').readlines())
+
+        _sort_stored_fullnames()
+
+
+def _sort_stored_fullnames():
+    fullnames = sorted(list(set(open(MYPYIND_PATH / 'fullnames.txt', 'r').readlines())))
+    with open(MYPYIND_PATH / 'fullnames.txt', 'w') as f:
+        f.writelines(fullnames)
 
 
 def _debug_write_level(level):

@@ -1,5 +1,4 @@
 """Expression type checker. This file is conceptually part of TypeChecker."""
-from pathlib import Path
 
 from __future__ import annotations
 
@@ -181,6 +180,7 @@ from mypy.typevars import fill_typevars
 from mypy.typevartuples import find_unpack_in_list
 from mypy.util import split_module_names
 from mypy.visitor import ExpressionVisitor
+from mypyind.utils import store_fullname_if_found
 
 # Type of callback user for checking individual function arguments. See
 # check_args() below for details.
@@ -212,9 +212,6 @@ OVERLAPPING_BYTES_ALLOWLIST: Final = {
     "builtins.bytearray",
     "builtins.memoryview",
 }
-
-
-MYPYIND_PATH = Path(__file__).parent.parent / "mypyind"
 
 
 class TooManyUnions(Exception):
@@ -304,13 +301,6 @@ class ExpressionChecker(ExpressionVisitor[Type]):
         # time for nested expressions.
         self.in_expression = False
         self.type_context = [None]
-
-        self.fullnames = set(
-            line.rstrip('\n')
-            for line in open(MYPYIND_PATH / "fullnames.txt", 'r').readlines()
-        )
-        self.members = set(open(MYPYIND_PATH / "members.txt", 'r').readlines())
-        self.raw_f = open(MYPYIND_PATH / 'raw.txt', 'a')
 
         # Temporary overrides for expression types. This is currently
         # used by the union math in overloads.
@@ -572,28 +562,10 @@ class ExpressionChecker(ExpressionVisitor[Type]):
             ):
                 member = e.callee.name
                 object_type = self.chk.lookup_type(e.callee.expr)
+        store_fullname_if_found(fullname, member, object_type, self.chk.tscope.function)
         ret_type = self.check_call_expr_with_callee_type(
             callee_type, e, fullname, object_type, member
         )
-        if fullname is None and object_type is not None:
-            _name = None
-            if hasattr(object_type, 'type'):
-                _name = object_type.type.fullname
-            if _name is not None:
-                fullname = _name + '.' + member
-
-        parent_f = self.chk.tscope.function
-        if (
-            parent_f is not None
-            and str(fullname) in self.fullnames
-            and 'test' not in parent_f.fullname
-        ):
-            with open(MYPYIND_PATH / 'fullnames.txt', 'a') as f:
-                f.write(parent_f.fullname)
-                f.write('\n')
-            with open(MYPYIND_PATH / 'fullnames_debug.txt', 'a') as f:
-                f.write(f'{fullname} is called from {parent_f.fullname}')
-                f.write('\n')
         if isinstance(e.callee, RefExpr) and len(e.args) == 2:
             if e.callee.fullname in ("builtins.isinstance", "builtins.issubclass"):
                 self.check_runtime_protocol_test(e)
