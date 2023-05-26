@@ -87,9 +87,6 @@ CORE_BUILTIN_MODULES: Final = {
 Graph: _TypeAlias = Dict[str, 'State']
 
 
-MYPYIND_PATH = Path(__file__).parent.parent / 'mypyind'
-
-
 # TODO: Get rid of BuildResult.  We might as well return a BuildManager.
 class BuildResult:
     """The result of a successful build.

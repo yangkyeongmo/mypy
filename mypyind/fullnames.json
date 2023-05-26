@@ -1,0 +1,16 @@
+{
+    "mypy.build.order_ascc": {
+        "level": 0,
+        "from": [
+            "mypy.build.dump_graph",
+            "mypy.build.process_graph",
+            "mypy.build.order_ascc"
+        ]
+    },
+    "mypy.build.dump_graph": {
+        "level": 1,
+        "from": [
+            "mypy.build.dispatch"
+        ]
+    }
+}
