@@ -67,7 +67,7 @@ class MemorybasedMypyindWriter(AbstractMypyindWriter):
     def _is_target(self, target: str, from_: str):
         if not self._include_test and 'test' in from_:
             return False
-        return target in self._found
+        return self._state.is_in_found(target)
 
     def _store_target(self, target: str, from_: str):
         if target in self._new_found:

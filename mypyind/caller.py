@@ -46,15 +46,15 @@ class AbstractMypyindCaller(abc.ABC):
 class FilebasedMypyindCaller(AbstractMypyindCaller):
     def _is_updated(self):
         current_found = set(l.strip() for l in open(FULLNAMES_PATH, 'r').readlines())
-        logger.debug((self._state.found, current_found))
-        return len(current_found.difference(self._state.found)) > 0
+        logger.debug((self._state._found.keys(), current_found))
+        return any(not self._state.is_in_found(l) for l in current_found)
 
     def _update_found(self):
         fullnames = set(open(FULLNAMES_PATH, 'r').readlines())
         with open(FULLNAMES_PATH, 'w') as f:
             f.writelines(sorted(list(fullnames)))
         for l in fullnames:
-            self._state.add_found(l.strip())
+            self._state.add_found(l.strip(), "")
 
     def _finish(self):
         fullnames = set(open(FULLNAMES_PATH, 'r').readlines())

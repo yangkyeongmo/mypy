@@ -1,7 +1,7 @@
 class MypyindState:
     def __init__(self):
-        self._level = 0
-        self._found = set()
+        self._level: int = 0
+        self._found: dict[str, dict[str, int | list[str]]] = dict()
 
     @property
     def level(self) -> int:
@@ -10,12 +10,11 @@ class MypyindState:
     def increase_level(self):
         self._level += 1
 
-    @property
-    def found(self) -> set[str]:
-        return self._found
-
-    def add_found(self, fullname: str):
-        self._found.add(fullname)
+    def add_found(self, fullname: str, from_: str):
+        if fullname in self._found:
+            self._found[fullname]['from'].append(from_)
+        else:
+            self._found[fullname] = {'level': self._level, 'from': [from_]}
 
     def is_in_found(self, fullname: str) -> bool:
         return fullname in self._found
