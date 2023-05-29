@@ -1,14 +1,14 @@
 import sys
 from pathlib import Path
 
-from mypyind import mypyind_manager
+from mypyind.caller import mypyind_caller
 from mypyind.constants import DATA_DIR
 
 
 def main(at: str):
     path = Path(at)
-    targets = list(open(DATA_DIR / 'seed.txt', 'r').readlines())
-    mypyind_manager.find(targets=targets, at=path)
+    targets = list(l.strip() for l in open(DATA_DIR / 'seed.txt', 'r').readlines())
+    mypyind_caller.find(targets=targets, at=path)
 
 
 if __name__ == '__main__':

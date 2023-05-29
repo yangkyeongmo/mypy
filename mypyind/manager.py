@@ -1,31 +1,30 @@
 from __future__ import annotations
 
 import abc
+import json
 import os
-from typing import Optional
 
-from mypy.nodes import FuncBase
-from mypy.types import Type
 from mypyind.constants import (
     FULLNAMES_DEBUG_PATH,
     FULLNAMES_PATH,
     MAIN_PATH,
-    MYPYIND_REQUIRED_OPTIONS,
+    MYPYIND_REQUIRED_OPTIONS, DATA_DIR,
 )
 
 
 class AbstractMypyindManager(abc.ABC):
-    def __init__(self, debug: bool = False, include_test: bool = False):
+    def __init__(self, mypy_caller, debug: bool = False, include_test: bool = False):
         self._level = 0
+        self._mypy_caller = mypy_caller
         self._debug = debug
         self._include_test = include_test
 
     def find(self, targets: list[str], at: str) -> None:
-        self._call_mypy(at, MYPYIND_REQUIRED_OPTIONS)
+        self._mypy_caller.call(at, MYPYIND_REQUIRED_OPTIONS)
         while self._is_updated():
             self._level += 1
             self._update_fullnames()
-            self._call_mypy(at, MYPYIND_REQUIRED_OPTIONS)
+            self._mypy_caller.call(at, MYPYIND_REQUIRED_OPTIONS)
         self._finish()
 
     def _call_mypy(self, at: str, options: list[str]) -> None:
@@ -45,8 +44,8 @@ class AbstractMypyindManager(abc.ABC):
         self,
         fullname: None | str,
         member: str,
-        object_type: None | Type,
-        parent_f: None | FuncBase,
+        object_type,
+        parent_f,
     ):
         if fullname is None and object_type is not None:
             # render fullname from object_type if object_type.type.fullname exists
@@ -106,47 +105,38 @@ class FilebasedMypyindManager(AbstractMypyindManager):
             f.writelines(sorted(list(fullnames)))
 
 
-class MemoryMypyindManager(AbstractMypyindManager):
-    def __init__(self):
-        super().__init__()
-        self._found = dict()  # keys represent found fullnames.
+class MemorybasedMypyindManager(AbstractMypyindManager):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        seeds = list(l.strip() for l in open(DATA_DIR / 'seed.txt', 'r').readlines())
+        self._found = {t: {'level': -1, 'from': []} for t in seeds}  # keys represent found fullnames.
         self._new_found = dict()  # stores fullnames found in the current level.
 
-    def find(self, targets: list[str], at: str) -> None:
-        """Find each given target in the given directory/file path."""
-        # call mypy
-        while any(new_key not in self._found for new_key in self._new_found):
-            self._level += 1
-            self._found = self._new_found
-            self._new_found = dict()
-            # call mypy
+    def _is_updated(self):
+        print(self._found, self._new_found)
+        return any(new_key not in self._found for new_key in self._new_found)
 
-    def store_fullname_if_found(
-        self,
-        fullname: Optional[str],
-        member: str,
-        object_type: Optional[Type],
-        parent_f: Optional[FuncBase],
-    ):
-        if fullname is None and object_type is not None:
-            # render fullname from object_type if object_type.type.fullname exists
-            _name = None
-            if hasattr(object_type, 'type'):
-                _name = object_type.type.fullname
-            if _name is not None:
-                fullname = _name + '.' + member
-        if self._is_matching_fullname(self._found, fullname, parent_f):
-            self._write_fullname(fullname, parent_f)
+    def _update_fullnames(self):
+        for new_key, new_value in self._new_found.items():
+            if new_key in self._found:
+                self._found[new_key]['from'].extend(new_value['from'])
+            else:
+                self._found[new_key] = new_value
+            self._found[new_key]['from'] = list(set(self._found[new_key]['from']))
 
-    def _is_matching_fullname(self, found_fullnames, fullname, parent_f):
-        return (
-            str(fullname) in found_fullnames
-            and parent_f is not None
-            and 'test' not in parent_f.fullname
-        )
+    def _is_target(self, target: str, from_: str):
+        if not self._include_test and 'test' in from_:
+            return False
+        return target in self._found
 
-    def _write_fullname(self, fullname, parent_f):
-        if fullname in self._new_found:
-            self._new_found[fullname]['from'].append(parent_f.fullname)
+    def _store_target(self, target: str, from_: str):
+        print(target, from_)
+        if target in self._new_found:
+            self._new_found[target]['from'].append(from_)
         else:
-            self._new_found[fullname] = {'level': self._level, 'from': [parent_f.fullname]}
+            self._new_found[target] = {'level': self._level, 'from': [from_]}
+        if from_ not in self._new_found:
+            self._new_found[from_] = {'level': self._level + 1, 'from': []}
+
+    def _finish(self):
+        json.dump(self._found, open(DATA_DIR / 'fullnames_2.json', 'w'))
