@@ -1,25 +1,26 @@
 import abc
 import logging
+from dataclasses import dataclass
 
-from mypyind.constants import FULLNAMES_PATH, FULLNAMES_DEBUG_PATH, DATA_DIR
-from mypyind.state import MypyindState, mypyind_state
+from mypyind.src.constants import FULLNAMES_PATH, FULLNAMES_DEBUG_PATH, DATA_DIR
+from mypyind.src.state import MypyindState, mypyind_state
 
 logger = logging.getLogger(__name__)
 
 
+@dataclass(frozen=True)
+class WriterConfig:
+    path: str
+
+
 class AbstractMypyindWriter(abc.ABC):
-    def __init__(self, state: MypyindState, debug: bool = False, include_test: bool = False):
+    def __init__(self, state: MypyindState, config: WriterConfig = None, debug: bool = False, include_test: bool = False):
         self._state = state
+        self._config = config
         self._debug = debug
         self._include_test = include_test
 
-    def write_if_found(
-        self,
-        fullname: None | str,
-        member: str,
-        object_type,
-        parent_f,
-    ):
+    def render_fullname(self, fullname: None | str, member: str, object_type, parent_f):
         if fullname is None and object_type is not None:
             # render fullname from object_type if object_type.type.fullname exists
             _name = None
@@ -29,15 +30,25 @@ class AbstractMypyindWriter(abc.ABC):
                 fullname = _name + '.' + member
         if parent_f is None or fullname is None:
             return
-        if self._is_target(target=fullname, from_=parent_f.fullname):
-            self._store_target(target=fullname, from_=parent_f.fullname)
+        return fullname
+
+    def add_if_found(self, target: str, from_: str):
+        if self._is_target(target=target, from_=from_):
+            self._add_target(target=target, from_=from_)
 
     @abc.abstractmethod
     def _is_target(self, target: str, from_: str):
+        """Determine if we're looking for this target."""
         ...
 
     @abc.abstractmethod
-    def _store_target(self, target: str, from_: str):
+    def _add_target(self, target: str, from_: str):
+        """Memo this target as found."""
+        ...
+
+    @abc.abstractmethod
+    def dump_found(self):
+        """Dump found targets to a file."""
         ...
 
 
@@ -47,14 +58,18 @@ class FilebasedMypyindWriter(AbstractMypyindWriter):
             return False
         return self._state.is_in_found(target)
 
-    def _store_target(self, target: str, from_: str):
-        with open(FULLNAMES_PATH, 'a') as f:
+    def _add_target(self, target: str, from_: str):
+        with open(self._config.path, 'a') as f:
             f.write(from_ + '\n')
+        self._state.add_found(target, from_)
         if self._debug:
             debug_str = f'{target} is called from {from_} at {self._state.level} level.'
             logger.debug(debug_str)
-            with open(FULLNAMES_DEBUG_PATH, 'a') as f:
+            with open(self._config.path, 'a') as f:
                 f.write(debug_str + '\n')
+
+    def dump_found(self):
+        ...
 
 
 class MemorybasedMypyindWriter(AbstractMypyindWriter):
@@ -69,13 +84,16 @@ class MemorybasedMypyindWriter(AbstractMypyindWriter):
             return False
         return self._state.is_in_found(target)
 
-    def _store_target(self, target: str, from_: str):
+    def _add_target(self, target: str, from_: str):
         if target in self._new_found:
             self._new_found[target]['from'].append(from_)
         else:
             self._new_found[target] = {'level': self._state.level, 'from': [from_]}
         if from_ not in self._new_found:
             self._new_found[from_] = {'level': self._state.level + 1, 'from': []}
+
+    def dump_found(self):
+        ...
 
 
 mypyind_writer = FilebasedMypyindWriter(state=mypyind_state, debug=True)

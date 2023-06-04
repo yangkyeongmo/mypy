@@ -1,7 +1,7 @@
 class MypyindState:
-    def __init__(self):
+    def __init__(self, seed: str = ''):
         self._level: int = 0
-        self._found: dict[str, dict[str, int | list[str]]] = dict()
+        self._found: dict[str, dict[str, int | list[str]]] = {seed: {'level': -1, 'from': []}}
 
     @property
     def level(self) -> int:

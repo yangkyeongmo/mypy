@@ -4,8 +4,8 @@ import logging
 import sys
 
 from mypy.main import main
-from mypyind.constants import MYPYIND_REQUIRED_OPTIONS, FULLNAMES_PATH, DATA_DIR
-from mypyind.state import MypyindState, mypyind_state
+from mypyind.src.constants import MYPYIND_REQUIRED_OPTIONS, FULLNAMES_PATH, DATA_DIR
+from mypyind.src.state import MypyindState, mypyind_state
 
 logger = logging.getLogger(__name__)
 
