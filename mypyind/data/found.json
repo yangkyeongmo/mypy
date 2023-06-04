@@ -1,0 +1,50 @@
+{
+    "mypy.build.order_ascc": {
+        "mypy.build.dump_graph": 1,
+        "mypy.build.process_graph": 1,
+        "mypy.build.order_ascc": 1
+    },
+    "mypy.build.dump_graph": {
+        "mypy.build.dispatch": 2
+    },
+    "mypy.build.process_graph": {
+        "mypy.build.dispatch": 2
+    },
+    "mypy.build.dispatch": {
+        "mypy.build.dispatch": 2,
+        "mypy.build._build": 2
+    },
+    "mypy.build._build": {
+        "mypy.build.build": 3
+    },
+    "mypy.build.build": {
+        "mypy.stubgen.generate_asts_for_modules": 3,
+        "mypy.main.run_build": 3,
+        "mypy.dmypy_server.Server.initialize_fine_grained": 3
+    },
+    "mypy.stubgen.generate_asts_for_modules": {
+        "mypy.stubgen.generate_stubs": 3
+    },
+    "mypy.stubgen.generate_stubs": {
+        "mypy.stubgen.main": 3
+    },
+    "mypy.stubgen.main": {},
+    "mypy.main.run_build": {
+        "mypy.main.main": 4
+    },
+    "mypy.dmypy_server.Server.initialize_fine_grained": {
+        "mypy.dmypy_server.Server.check": 4
+    },
+    "mypy.main.main": {
+        "mypy.__main__.console_entry": 4,
+        "mypy.api.run": 4
+    },
+    "mypy.__main__.console_entry": {},
+    "mypy.dmypy_server.Server.check": {
+        "mypy.dmypy_server.Server.cmd_run": 5,
+        "mypy.dmypy_server.Server.cmd_check": 5
+    },
+    "mypy.api.run": {},
+    "mypy.dmypy_server.Server.cmd_run": {},
+    "mypy.dmypy_server.Server.cmd_check": {}
+}
