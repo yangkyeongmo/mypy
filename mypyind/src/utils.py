@@ -2,7 +2,7 @@ from typing import Optional
 
 from mypy.nodes import FuncBase
 from mypy.types import Type
-from mypyind.constants import MYPYIND_DIR
+from mypyind.src.constants import MYPYIND_DIR
 
 
 def store_fullname_if_found(

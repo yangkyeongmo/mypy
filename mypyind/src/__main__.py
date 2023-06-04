@@ -1,8 +1,8 @@
 import sys
 from pathlib import Path
 
-from mypyind.caller import mypyind_caller
-from mypyind.constants import DATA_DIR
+from mypyind.src.caller import mypyind_caller
+from mypyind.src.constants import DATA_DIR
 
 
 def main(at: str):

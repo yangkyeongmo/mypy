@@ -15,3 +15,13 @@ mypy.main.run_build
 mypy.stubgen.generate_asts_for_modules
 mypy.stubgen.generate_stubs
 mypy.stubgen.main
+bar
+bar
+bar
+bar
+bar
+bar
+bar
+bar
+bar
+bar
