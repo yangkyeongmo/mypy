@@ -21,7 +21,6 @@ class TestFilebasedMypyindWriter:
         state = MypyindState('foo')
         with (
             tempfile.TemporaryDirectory() as tmpdir,
-            mock.patch('mypyind.src.constants.DATA_DIR', Path(tmpdir)),
             tempfile.NamedTemporaryFile(mode='w', dir=tmpdir, prefix='fullnames', suffix='.txt') as tmpfile,
         ):
             writer_config = WriterConfig(path=tmpfile.name)
@@ -31,4 +30,4 @@ class TestFilebasedMypyindWriter:
 
             writer.dump_found()
 
-            assert Path(tmpfile.name).read_text() == 'bar\nbaz\n'
+            assert Path(tmpfile.name).read_text() == 'foo\nbar\nbaz\n'

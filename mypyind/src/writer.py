@@ -59,17 +59,16 @@ class FilebasedMypyindWriter(AbstractMypyindWriter):
         return self._state.is_in_found(target)
 
     def _add_target(self, target: str, from_: str):
-        with open(self._config.path, 'a') as f:
-            f.write(from_ + '\n')
         self._state.add_found(target, from_)
-        if self._debug:
-            debug_str = f'{target} is called from {from_} at {self._state.level} level.'
-            logger.debug(debug_str)
-            with open(self._config.path, 'a') as f:
-                f.write(debug_str + '\n')
 
     def dump_found(self):
-        ...
+        with open(self._config.path, 'a') as f:
+            for found in self._state.found:
+                f.write(found + '\n')
+            if self._debug:
+                for found, info in self._state.found.items():
+                    for item in info:
+                        f.write(f'{found} is called from {item.from_} at {item.level} level.\n')
 
 
 class MemorybasedMypyindWriter(AbstractMypyindWriter):
