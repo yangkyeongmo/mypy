@@ -16,11 +16,11 @@ def test_increase_level():
 def test_add_found():
     state = MypyindState('seed')
     state.add_found('foo', 'bar')
-    assert state.is_in_found('foo')
+    assert state.list_all_found() == ['seed', 'foo', 'bar']
 
 
 def test_add_found_to_existing():
     state = MypyindState('seed')
     state.add_found('foo', 'bar')
     state.add_found('foo', 'baz')
-    assert state.is_in_found('foo')
+    assert state.list_all_found() == ['seed', 'foo', 'bar', 'baz']
