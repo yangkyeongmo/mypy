@@ -1,4 +1,4 @@
-from mypyind.src.constants import DEBUG_LOG_PATH
+from mypyind.src.configs import DEBUG_LOG_PATH
 from mypyind.src.state import MypyindState, mypyind_state
 
 
