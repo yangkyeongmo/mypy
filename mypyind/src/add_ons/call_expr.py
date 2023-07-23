@@ -1,13 +1,15 @@
 from mypyind.src.configs import DEBUG_LOG_PATH
-from mypyind.src.state import MypyindState, mypyind_state
+from mypyind.src.state import global_mypyind_state
+
+# type check
+from mypyind.src.state import MypyindState
 
 
-class MypyindWriter:
-    def __init__(
-        self, state: MypyindState, debug: bool = False, include_test: bool = False
-    ):
+class CallExprAddOn:
+    """Add-on for mypyind, added on mypy's call expr function."""
+
+    def __init__(self, state: MypyindState, include_test: bool = False):
         self._state = state
-        self._debug = debug
         self._include_test = include_test
 
     def render_fullname(
@@ -25,13 +27,11 @@ class MypyindWriter:
         return fullname
 
     def add_if_found(self, target: str, from_: str):
-        if (not self._include_test and "test" in from_) or not self._state.is_in_found(
-            target
-        ):
+        if (not self._include_test and "test" in from_) or not self._state.is_in_found(target):
             return
         self._state.add_found(target, from_)
         with open(DEBUG_LOG_PATH, "a") as f:
             f.write(f"[{self._state.level}] {target} is called from {from_}\n")
 
 
-mypyind_writer = MypyindWriter(state=mypyind_state)
+call_expr_add_on = CallExprAddOn(state=global_mypyind_state)

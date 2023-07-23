@@ -1,19 +1,10 @@
 import sys
-from pathlib import Path
 
-from mypyind.src.caller import MypyindCaller
-from mypyind.src.state import mypyind_state
-
-
-def main(at: str):
-    path = Path(at)
-    mypyind_caller = MypyindCaller(state=mypyind_state)
-    mypyind_caller.find(at=path.name)
-
+from mypyind.src.view.command import run_mypyind
 
 if __name__ == "__main__":
     try:
-        target = sys.argv[1]
+        target_path = sys.argv[1]
     except IndexError:
         raise Exception("Please provide a target file path.")
-    main(at=target)
+    run_mypyind(target_path=target_path)
