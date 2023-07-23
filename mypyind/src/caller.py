@@ -3,14 +3,17 @@ import logging
 import sys
 
 from mypy.main import main
-from mypyind.src.constants import (
-    JSON_PATH,
-    MYPYIND_REQUIRED_OPTIONS,
-    TXT_PATH,
-)
+from mypyind.src.configs import TXT_PATH, JSON_PATH, INI_PATH
 from mypyind.src.state import MypyindState
 
 logger = logging.getLogger(__name__)
+
+MYPYIND_REQUIRED_OPTIONS = (
+    "--cache-dir=/dev/null",  # disable caching
+    "--namespace-packages",
+    f"--config-file={INI_PATH}",  # use custom config file
+    "--show-traceback",
+)
 
 
 class MypyindCaller:

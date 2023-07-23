@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-from mypyind.src.constants import DATA_DIR
+from mypyind.src.configs import DATA_DIR
 
 logger = logging.getLogger(__name__)
 
