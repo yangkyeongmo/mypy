@@ -73,7 +73,7 @@ from mypy.typeops import (
 )
 from mypy.message_registry import ErrorMessage
 import mypy.errorcodes as codes
-from mypyind.src.writer import mypyind_writer
+from mypyind.src.add_ons.call_expr import call_expr_add_on
 
 # Type of callback user for checking individual function arguments. See
 # check_args() below for details.
@@ -374,9 +374,9 @@ class ExpressionChecker(ExpressionVisitor[Type]):
                 member = e.callee.name
                 object_type = self.chk.type_map[e.callee.expr]
 
-        rendered_fullname = mypyind_writer.render_fullname(fullname, member, object_type, self.chk.tscope.function)
+        rendered_fullname = call_expr_add_on.render_fullname(fullname, member, object_type, self.chk.tscope.function)
         if rendered_fullname:
-            mypyind_writer.add_if_found(target=rendered_fullname, from_=self.chk.tscope.function.fullname)
+            call_expr_add_on.add_if_found(target=rendered_fullname, from_=self.chk.tscope.function.fullname)
 
         ret_type = self.check_call_expr_with_callee_type(callee_type, e, fullname,
                                                          object_type, member)

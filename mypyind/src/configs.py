@@ -8,6 +8,7 @@ DATA_DIR = Path(DIR, "../data")
 TXT_PATH = Path(DATA_DIR, "found.txt")
 JSON_PATH = Path(DATA_DIR, "found.json")
 DEBUG_LOG_PATH = Path(DATA_DIR, "found.log")
+SEED_PATH = Path(DATA_DIR, "seed.txt")
 
 # Mypy related path
 MYPY_DIR = Path(DIR.parent, "mypy")

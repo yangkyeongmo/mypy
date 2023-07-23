@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-from mypyind.src.configs import DATA_DIR
+from mypyind.src.configs import SEED_PATH
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +27,7 @@ class MypyindState:
 
     def increase_level(self):
         self._level += 1
+        logger.info(f"[Iteration {self._level}] Finding...")
 
     def add_found(self, fullname: str, from_: str | None):
         logger.debug(f"Adding {fullname} from {from_} at level {self._level}.")
@@ -43,5 +44,5 @@ class MypyindState:
         return list(self._found.keys())
 
 
-_seed = open(DATA_DIR / "seed.txt", "r").read().strip()
-mypyind_state = MypyindState(seed=_seed)
+_seed = open(SEED_PATH, "r").read().strip()
+global_mypyind_state = MypyindState(seed=_seed)
