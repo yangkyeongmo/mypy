@@ -7,7 +7,7 @@ from mypyind.src.state import mypyind_state
 
 def main(at: str):
     path = Path(at)
-    mypyind_caller = MypyindCaller(state=mypyind_state, debug=True)
+    mypyind_caller = MypyindCaller(state=mypyind_state)
     mypyind_caller.find(at=path.name)
 
 
