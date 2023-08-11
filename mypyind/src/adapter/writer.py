@@ -1,6 +1,7 @@
 import json
+from datetime import datetime
 
-from mypyind.src.configs import TXT_PATH, JSON_PATH
+from mypyind.src.configs import TXT_PATH, JSON_PATH, DEBUG_LOG_PATH
 
 # type check
 from mypyind.src.state import MypyindState
@@ -21,3 +22,8 @@ def write_state_to_json_file(state: MypyindState):
             )
     with open(JSON_PATH, "w") as f:
         json.dump(dump_data, f, indent=4)
+
+
+def write_log_to_log_file(log: str):
+    with open(DEBUG_LOG_PATH, "a") as f:
+        f.write(f"[{datetime.now().isoformat()}] {log}\n")

@@ -38,7 +38,7 @@ Each line of `found.txt` contains a fullname of function call that is found.
 Each line of `found.log` contains a fullname of function call that is found, and the fullname of function that calls it.
 
 ```log
-[Iteration Number] [Fullname of function call] is called from [Fullname of function that calls it]
+[Time] [Iteration Number] [Fullname of function call] is called from [Fullname of function that calls it]
 ```
 
 ## found.json

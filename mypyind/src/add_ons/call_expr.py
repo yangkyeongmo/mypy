@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from mypyind.src.adapter.writer import write_log_to_log_file
 from mypyind.src.configs import DEBUG_LOG_PATH
 from mypyind.src.state import global_mypyind_state
 
@@ -30,8 +33,7 @@ class CallExprAddOn:
         if (not self._include_test and "test" in from_) or not self._state.is_in_found(target):
             return
         self._state.add_found(target, from_)
-        with open(DEBUG_LOG_PATH, "a") as f:
-            f.write(f"[{self._state.level}] {target} is called from {from_}\n")
+        write_log_to_log_file(log=f"[{self._state.level}] [{target}] is called from [{from_}]")
 
 
 call_expr_add_on = CallExprAddOn(state=global_mypyind_state)

@@ -1,91 +1,91 @@
-[1] mypy.build.order_ascc is called from mypy.build.dump_graph
-[1] mypy.build.order_ascc is called from mypy.build.process_graph
-[1] mypy.build.order_ascc is called from mypy.build.order_ascc
-[2] mypy.build.dump_graph is called from mypy.build.dispatch
-[2] mypy.build.dispatch is called from mypy.build.dispatch
-[2] mypy.build.process_graph is called from mypy.build.dispatch
-[2] mypy.build.order_ascc is called from mypy.build.dump_graph
-[2] mypy.build.order_ascc is called from mypy.build.process_graph
-[2] mypy.build.order_ascc is called from mypy.build.order_ascc
-[2] mypy.build.dispatch is called from mypy.build._build
-[3] mypy.build._build is called from mypy.build.build
-[3] mypy.build.dispatch is called from mypy.build._build
-[3] mypy.build.dump_graph is called from mypy.build.dispatch
-[3] mypy.build.dispatch is called from mypy.build.dispatch
-[3] mypy.build.process_graph is called from mypy.build.dispatch
-[3] mypy.build.order_ascc is called from mypy.build.dump_graph
-[3] mypy.build.order_ascc is called from mypy.build.process_graph
-[3] mypy.build.order_ascc is called from mypy.build.order_ascc
-[3] mypy.build.dispatch is called from mypy.build._build
-[3] mypy.build.build is called from mypy.stubgen.generate_asts_for_modules
-[3] mypy.stubgen.generate_asts_for_modules is called from mypy.stubgen.generate_stubs
-[3] mypy.stubgen.generate_stubs is called from mypy.stubgen.main
-[3] mypy.build.build is called from mypy.main.run_build
-[3] mypy.build.build is called from mypy.dmypy_server.Server.initialize_fine_grained
-[4] mypy.build._build is called from mypy.build.build
-[4] mypy.build.dispatch is called from mypy.build._build
-[4] mypy.build.dump_graph is called from mypy.build.dispatch
-[4] mypy.build.dispatch is called from mypy.build.dispatch
-[4] mypy.build.process_graph is called from mypy.build.dispatch
-[4] mypy.build.order_ascc is called from mypy.build.dump_graph
-[4] mypy.build.order_ascc is called from mypy.build.process_graph
-[4] mypy.build.order_ascc is called from mypy.build.order_ascc
-[4] mypy.build.dispatch is called from mypy.build._build
-[4] mypy.build.build is called from mypy.stubgen.generate_asts_for_modules
-[4] mypy.stubgen.generate_asts_for_modules is called from mypy.stubgen.generate_stubs
-[4] mypy.stubgen.generate_stubs is called from mypy.stubgen.main
-[4] mypy.main.run_build is called from mypy.main.main
-[4] mypy.main.run_build is called from mypy.main.main
-[4] mypy.main.run_build is called from mypy.main.main
-[4] mypy.main.run_build is called from mypy.main.main
-[4] mypy.build.build is called from mypy.main.run_build
-[4] mypy.main.main is called from mypy.__main__.console_entry
-[4] mypy.dmypy_server.Server.initialize_fine_grained is called from mypy.dmypy_server.Server.check
-[4] mypy.build.build is called from mypy.dmypy_server.Server.initialize_fine_grained
-[4] mypy.main.main is called from mypy.api.run
-[5] mypy.build._build is called from mypy.build.build
-[5] mypy.build.dispatch is called from mypy.build._build
-[5] mypy.build.dump_graph is called from mypy.build.dispatch
-[5] mypy.build.dispatch is called from mypy.build.dispatch
-[5] mypy.build.process_graph is called from mypy.build.dispatch
-[5] mypy.build.order_ascc is called from mypy.build.dump_graph
-[5] mypy.build.order_ascc is called from mypy.build.process_graph
-[5] mypy.build.order_ascc is called from mypy.build.order_ascc
-[5] mypy.build.dispatch is called from mypy.build._build
-[5] mypy.build.build is called from mypy.stubgen.generate_asts_for_modules
-[5] mypy.stubgen.generate_asts_for_modules is called from mypy.stubgen.generate_stubs
-[5] mypy.stubgen.generate_stubs is called from mypy.stubgen.main
-[5] mypy.main.run_build is called from mypy.main.main
-[5] mypy.main.run_build is called from mypy.main.main
-[5] mypy.main.run_build is called from mypy.main.main
-[5] mypy.main.run_build is called from mypy.main.main
-[5] mypy.build.build is called from mypy.main.run_build
-[5] mypy.main.main is called from mypy.__main__.console_entry
-[5] mypy.dmypy_server.Server.check is called from mypy.dmypy_server.Server.cmd_run
-[5] mypy.dmypy_server.Server.check is called from mypy.dmypy_server.Server.cmd_check
-[5] mypy.dmypy_server.Server.initialize_fine_grained is called from mypy.dmypy_server.Server.check
-[5] mypy.build.build is called from mypy.dmypy_server.Server.initialize_fine_grained
-[5] mypy.main.main is called from mypy.api.run
-[6] mypy.build._build is called from mypy.build.build
-[6] mypy.build.dispatch is called from mypy.build._build
-[6] mypy.build.dump_graph is called from mypy.build.dispatch
-[6] mypy.build.dispatch is called from mypy.build.dispatch
-[6] mypy.build.process_graph is called from mypy.build.dispatch
-[6] mypy.build.order_ascc is called from mypy.build.dump_graph
-[6] mypy.build.order_ascc is called from mypy.build.process_graph
-[6] mypy.build.order_ascc is called from mypy.build.order_ascc
-[6] mypy.build.dispatch is called from mypy.build._build
-[6] mypy.build.build is called from mypy.stubgen.generate_asts_for_modules
-[6] mypy.stubgen.generate_asts_for_modules is called from mypy.stubgen.generate_stubs
-[6] mypy.stubgen.generate_stubs is called from mypy.stubgen.main
-[6] mypy.main.run_build is called from mypy.main.main
-[6] mypy.main.run_build is called from mypy.main.main
-[6] mypy.main.run_build is called from mypy.main.main
-[6] mypy.main.run_build is called from mypy.main.main
-[6] mypy.build.build is called from mypy.main.run_build
-[6] mypy.main.main is called from mypy.__main__.console_entry
-[6] mypy.dmypy_server.Server.check is called from mypy.dmypy_server.Server.cmd_run
-[6] mypy.dmypy_server.Server.check is called from mypy.dmypy_server.Server.cmd_check
-[6] mypy.dmypy_server.Server.initialize_fine_grained is called from mypy.dmypy_server.Server.check
-[6] mypy.build.build is called from mypy.dmypy_server.Server.initialize_fine_grained
-[6] mypy.main.main is called from mypy.api.run
+[2023-08-12T01:59:16.322514] [1] [mypy.build.order_ascc] is called from [mypy.build.dump_graph]
+[2023-08-12T01:59:16.363349] [1] [mypy.build.order_ascc] is called from [mypy.build.process_graph]
+[2023-08-12T01:59:16.461403] [1] [mypy.build.order_ascc] is called from [mypy.build.order_ascc]
+[2023-08-12T01:59:49.815286] [2] [mypy.build.dump_graph] is called from [mypy.build.dispatch]
+[2023-08-12T01:59:49.818146] [2] [mypy.build.dispatch] is called from [mypy.build.dispatch]
+[2023-08-12T01:59:49.818596] [2] [mypy.build.process_graph] is called from [mypy.build.dispatch]
+[2023-08-12T01:59:49.835049] [2] [mypy.build.order_ascc] is called from [mypy.build.dump_graph]
+[2023-08-12T01:59:49.875479] [2] [mypy.build.order_ascc] is called from [mypy.build.process_graph]
+[2023-08-12T01:59:49.975567] [2] [mypy.build.order_ascc] is called from [mypy.build.order_ascc]
+[2023-08-12T01:59:50.119511] [2] [mypy.build.dispatch] is called from [mypy.build._build]
+[2023-08-12T02:00:22.383563] [3] [mypy.build._build] is called from [mypy.build.build]
+[2023-08-12T02:00:22.388433] [3] [mypy.build.dispatch] is called from [mypy.build._build]
+[2023-08-12T02:00:22.986736] [3] [mypy.build.dump_graph] is called from [mypy.build.dispatch]
+[2023-08-12T02:00:22.989609] [3] [mypy.build.dispatch] is called from [mypy.build.dispatch]
+[2023-08-12T02:00:22.990068] [3] [mypy.build.process_graph] is called from [mypy.build.dispatch]
+[2023-08-12T02:00:23.006594] [3] [mypy.build.order_ascc] is called from [mypy.build.dump_graph]
+[2023-08-12T02:00:23.047563] [3] [mypy.build.order_ascc] is called from [mypy.build.process_graph]
+[2023-08-12T02:00:23.148173] [3] [mypy.build.order_ascc] is called from [mypy.build.order_ascc]
+[2023-08-12T02:00:23.292157] [3] [mypy.build.dispatch] is called from [mypy.build._build]
+[2023-08-12T02:00:24.424389] [3] [mypy.build.build] is called from [mypy.stubgen.generate_asts_for_modules]
+[2023-08-12T02:00:24.441917] [3] [mypy.stubgen.generate_asts_for_modules] is called from [mypy.stubgen.generate_stubs]
+[2023-08-12T02:00:24.479141] [3] [mypy.stubgen.generate_stubs] is called from [mypy.stubgen.main]
+[2023-08-12T02:00:24.553977] [3] [mypy.build.build] is called from [mypy.main.run_build]
+[2023-08-12T02:00:25.807875] [3] [mypy.build.build] is called from [mypy.dmypy_server.Server.initialize_fine_grained]
+[2023-08-12T02:00:55.997685] [4] [mypy.build._build] is called from [mypy.build.build]
+[2023-08-12T02:00:56.002266] [4] [mypy.build.dispatch] is called from [mypy.build._build]
+[2023-08-12T02:00:56.581382] [4] [mypy.build.dump_graph] is called from [mypy.build.dispatch]
+[2023-08-12T02:00:56.584188] [4] [mypy.build.dispatch] is called from [mypy.build.dispatch]
+[2023-08-12T02:00:56.584628] [4] [mypy.build.process_graph] is called from [mypy.build.dispatch]
+[2023-08-12T02:00:56.600784] [4] [mypy.build.order_ascc] is called from [mypy.build.dump_graph]
+[2023-08-12T02:00:56.640968] [4] [mypy.build.order_ascc] is called from [mypy.build.process_graph]
+[2023-08-12T02:00:56.740920] [4] [mypy.build.order_ascc] is called from [mypy.build.order_ascc]
+[2023-08-12T02:00:56.885408] [4] [mypy.build.dispatch] is called from [mypy.build._build]
+[2023-08-12T02:00:57.981501] [4] [mypy.build.build] is called from [mypy.stubgen.generate_asts_for_modules]
+[2023-08-12T02:00:57.998714] [4] [mypy.stubgen.generate_asts_for_modules] is called from [mypy.stubgen.generate_stubs]
+[2023-08-12T02:00:58.034859] [4] [mypy.stubgen.generate_stubs] is called from [mypy.stubgen.main]
+[2023-08-12T02:00:58.098253] [4] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:00:58.098492] [4] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:00:58.099391] [4] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:00:58.099612] [4] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:00:58.108680] [4] [mypy.build.build] is called from [mypy.main.run_build]
+[2023-08-12T02:00:59.079029] [4] [mypy.main.main] is called from [mypy.__main__.console_entry]
+[2023-08-12T02:00:59.322600] [4] [mypy.dmypy_server.Server.initialize_fine_grained] is called from [mypy.dmypy_server.Server.check]
+[2023-08-12T02:00:59.325997] [4] [mypy.build.build] is called from [mypy.dmypy_server.Server.initialize_fine_grained]
+[2023-08-12T02:00:59.625367] [4] [mypy.main.main] is called from [mypy.api.run]
+[2023-08-12T02:01:29.728656] [5] [mypy.build._build] is called from [mypy.build.build]
+[2023-08-12T02:01:29.733366] [5] [mypy.build.dispatch] is called from [mypy.build._build]
+[2023-08-12T02:01:30.336460] [5] [mypy.build.dump_graph] is called from [mypy.build.dispatch]
+[2023-08-12T02:01:30.339333] [5] [mypy.build.dispatch] is called from [mypy.build.dispatch]
+[2023-08-12T02:01:30.339792] [5] [mypy.build.process_graph] is called from [mypy.build.dispatch]
+[2023-08-12T02:01:30.356469] [5] [mypy.build.order_ascc] is called from [mypy.build.dump_graph]
+[2023-08-12T02:01:30.397867] [5] [mypy.build.order_ascc] is called from [mypy.build.process_graph]
+[2023-08-12T02:01:30.499368] [5] [mypy.build.order_ascc] is called from [mypy.build.order_ascc]
+[2023-08-12T02:01:30.650096] [5] [mypy.build.dispatch] is called from [mypy.build._build]
+[2023-08-12T02:01:31.750844] [5] [mypy.build.build] is called from [mypy.stubgen.generate_asts_for_modules]
+[2023-08-12T02:01:31.767785] [5] [mypy.stubgen.generate_asts_for_modules] is called from [mypy.stubgen.generate_stubs]
+[2023-08-12T02:01:31.803625] [5] [mypy.stubgen.generate_stubs] is called from [mypy.stubgen.main]
+[2023-08-12T02:01:31.866206] [5] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:01:31.866450] [5] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:01:31.867318] [5] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:01:31.867530] [5] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:01:31.876303] [5] [mypy.build.build] is called from [mypy.main.run_build]
+[2023-08-12T02:01:32.844151] [5] [mypy.main.main] is called from [mypy.__main__.console_entry]
+[2023-08-12T02:01:33.080797] [5] [mypy.dmypy_server.Server.check] is called from [mypy.dmypy_server.Server.cmd_run]
+[2023-08-12T02:01:33.083032] [5] [mypy.dmypy_server.Server.check] is called from [mypy.dmypy_server.Server.cmd_check]
+[2023-08-12T02:01:33.089108] [5] [mypy.dmypy_server.Server.initialize_fine_grained] is called from [mypy.dmypy_server.Server.check]
+[2023-08-12T02:01:33.092526] [5] [mypy.build.build] is called from [mypy.dmypy_server.Server.initialize_fine_grained]
+[2023-08-12T02:01:33.391320] [5] [mypy.main.main] is called from [mypy.api.run]
+[2023-08-12T02:02:02.701597] [6] [mypy.build._build] is called from [mypy.build.build]
+[2023-08-12T02:02:02.706285] [6] [mypy.build.dispatch] is called from [mypy.build._build]
+[2023-08-12T02:02:03.312105] [6] [mypy.build.dump_graph] is called from [mypy.build.dispatch]
+[2023-08-12T02:02:03.314997] [6] [mypy.build.dispatch] is called from [mypy.build.dispatch]
+[2023-08-12T02:02:03.315450] [6] [mypy.build.process_graph] is called from [mypy.build.dispatch]
+[2023-08-12T02:02:03.332539] [6] [mypy.build.order_ascc] is called from [mypy.build.dump_graph]
+[2023-08-12T02:02:03.374560] [6] [mypy.build.order_ascc] is called from [mypy.build.process_graph]
+[2023-08-12T02:02:03.478221] [6] [mypy.build.order_ascc] is called from [mypy.build.order_ascc]
+[2023-08-12T02:02:03.622670] [6] [mypy.build.dispatch] is called from [mypy.build._build]
+[2023-08-12T02:02:04.755891] [6] [mypy.build.build] is called from [mypy.stubgen.generate_asts_for_modules]
+[2023-08-12T02:02:04.774018] [6] [mypy.stubgen.generate_asts_for_modules] is called from [mypy.stubgen.generate_stubs]
+[2023-08-12T02:02:04.812367] [6] [mypy.stubgen.generate_stubs] is called from [mypy.stubgen.main]
+[2023-08-12T02:02:04.878675] [6] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:02:04.878915] [6] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:02:04.879840] [6] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:02:04.880065] [6] [mypy.main.run_build] is called from [mypy.main.main]
+[2023-08-12T02:02:04.889344] [6] [mypy.build.build] is called from [mypy.main.run_build]
+[2023-08-12T02:02:05.894724] [6] [mypy.main.main] is called from [mypy.__main__.console_entry]
+[2023-08-12T02:02:06.142272] [6] [mypy.dmypy_server.Server.check] is called from [mypy.dmypy_server.Server.cmd_run]
+[2023-08-12T02:02:06.144626] [6] [mypy.dmypy_server.Server.check] is called from [mypy.dmypy_server.Server.cmd_check]
+[2023-08-12T02:02:06.151033] [6] [mypy.dmypy_server.Server.initialize_fine_grained] is called from [mypy.dmypy_server.Server.check]
+[2023-08-12T02:02:06.154677] [6] [mypy.build.build] is called from [mypy.dmypy_server.Server.initialize_fine_grained]
+[2023-08-12T02:02:06.460985] [6] [mypy.main.main] is called from [mypy.api.run]
