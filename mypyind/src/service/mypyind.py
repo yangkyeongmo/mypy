@@ -16,7 +16,13 @@ class Mypyind:
 
     def execute(self, target_path: str) -> None:
         self._state.increase_level()
-        call_mypy(target_path)
+        try:
+            call_mypy(target_path)
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+        except SystemExit:
+            # Mypy does sys.exit(2) when it finds errors. Bypass this for iteration.
+            pass
         write_state_to_json_file(self._state)
         write_state_to_text_file(self._state)
 

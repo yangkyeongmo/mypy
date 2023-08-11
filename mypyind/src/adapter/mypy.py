@@ -1,5 +1,5 @@
+import io
 import logging
-import sys
 
 from mypy.main import main
 from mypyind.src.configs import INI_PATH
@@ -18,9 +18,8 @@ def call_mypy(target_path: str, options: None | list[str] = None) -> None:
         options = []
     logger.info("Call mypy...")
     main(
-        script_path=None,
-        stdout=sys.stdout,
-        stderr=sys.stderr,
+        stdout=io.StringIO(),
+        stderr=io.StringIO(),
         args=[target_path] + MYPY_REQUIRED_OPTIONS + options,
         clean_exit=True,
     )

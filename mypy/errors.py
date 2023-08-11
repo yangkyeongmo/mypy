@@ -825,12 +825,15 @@ class Errors:
         """Raise a CompileError with the generated messages.
 
         Render the messages suitable for displaying.
+
+        MYPYIND: Normally, this method will raise an error for type check, but mypyind does not need it.
         """
         # self.new_messages() will format all messages that haven't already
         # been returned from a file_messages() call.
-        raise CompileError(
-            self.new_messages(), use_stdout=use_stdout, module_with_blocker=self.blocker_module()
-        )
+        pass
+        # raise CompileError(
+        #     self.new_messages(), use_stdout=use_stdout, module_with_blocker=self.blocker_module()
+        # )
 
     def format_messages(
         self, error_info: list[ErrorInfo], source_lines: list[str] | None
