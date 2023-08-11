@@ -40,6 +40,7 @@ from typing import (
     TextIO,
 )
 from typing_extensions import TypeAlias as _TypeAlias, TypedDict
+from pathlib import Path
 
 import mypy.semanal_main
 from mypy.checker import TypeChecker
